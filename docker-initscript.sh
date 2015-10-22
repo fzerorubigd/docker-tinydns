@@ -127,7 +127,7 @@ EOFEOF
     # I don't beleve in cron :))) just run the update every 10 minute.
     while :
     do
-        /var/www/html/update-data.sh
+        /var/www/html/update-data.sh || echo "update failed. nothing is defined yet?"
 	    sleep 600
     done
 else
