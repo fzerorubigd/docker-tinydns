@@ -2,12 +2,7 @@
 
 set -euo pipefail
 
-DNS_SERVER_IP=${DNS_SERVER_IP:-}
-if [ -z "${DNS_SERVER_IP}" ]; then
-    echo "DNS_SERVER_IP is required and must set it before using this"
-    exit 1
-fi
-
+DNS_SERVER_IP=${DNS_SERVER_IP:-0.0.0.0}
 MYSQL_HOST=${VEGA_MYSQL_HOST:-${MYSQL_PORT_3306_TCP_ADDR:-}}
 MYSQL_PORT=${VEGA_MYSQL_PORT:-${MYSQL_PORT_3306_TCP_PORT:-}}
 MYSQL_PASS=${VEGA_MYSQL_PASS:-${MYSQL_ENV_MYSQL_ROOT_PASSWORD:-}}
@@ -75,7 +70,7 @@ if [ "$1" = 'vegadns' ]; then
 
 // IP Address of the local tinydns instance.  This is the IP that will be used
 // for dns lookups on authoritative information
-\$tinydns_ip = '${DNS_SERVER_IP}';
+\$tinydns_ip = '127.0.0.1';
 
 // Records per page
 \$per_page = 75;
