@@ -2,7 +2,6 @@
 
 set -euo pipefail
 
-DNS_SERVER_IP=${DNS_SERVER_IP:-0.0.0.0}
 MYSQL_HOST=${VEGA_MYSQL_HOST:-${MYSQL_PORT_3306_TCP_ADDR:-}}
 MYSQL_PORT=${VEGA_MYSQL_PORT:-${MYSQL_PORT_3306_TCP_PORT:-}}
 MYSQL_PASS=${VEGA_MYSQL_PASS:-${MYSQL_ENV_MYSQL_ROOT_PASSWORD:-}}
@@ -107,13 +106,10 @@ EOFEOF
     sed -i -e "s/^VEGADNS=.*/VEGADNS='http:\/\/127.0.0.1\/index.php'/g" /var/www/html/update-data.sh
     chmod a+x /var/www/html/update-data.sh
 
-    /usr/bin/tinydns-conf Gtinydns Gdnslog /etc/tinydns ${DNS_SERVER_IP}
-    /usr/bin/dnscache-conf Gdnscache Gdnslog /etc/dnscache 0.0.0.0
-
+    /usr/bin/tinydns-conf Gtinydns Gdnslog /etc/tinydns 0.0.0.0
 
     mkdir -p /service
     ln -sf /etc/tinydns /service/tinydns
-    ln -sf /etc/dnscache /service/dnscache
 
     /etc/init.d/apache2 start
     # then finally, tinydns
